@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.trae/
+coverage/
+playwright-report/
+.vscode/
+.cache/
+*.log
+.DS_Store
+.env
+.env.local
