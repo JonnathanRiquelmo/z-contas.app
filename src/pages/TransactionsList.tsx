@@ -128,17 +128,17 @@ export default function TransactionsList() {
         </div>
       </div>
 
-      <div className="border border-neutral-700 rounded">
-        <div className="grid grid-cols-5 font-semibold p-2">
+      <div className="border border-neutral-700 rounded overflow-x-auto">
+        <div className="grid grid-cols-5 font-semibold p-2 min-w-[720px]">
           <div>Data</div><div>Categoria</div><div>Tipo</div><div className="text-right">Valor</div><div className="text-right">Ações</div>
         </div>
         {filtered.map(r => (
           <div key={r.id} className="p-2 border-t border-neutral-700">
-            <div className="grid grid-cols-5 items-center">
-              <div>{new Date(r.date).toLocaleDateString()}</div>
-              <div>{r.category}</div>
-              <div>{r.type}</div>
-              <div className="text-right">{r.amount.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}</div>
+            <div className="grid grid-cols-5 items-center min-w-[720px]">
+              <div className="truncate">{new Date(r.date).toLocaleDateString()}</div>
+              <div className="truncate">{r.category}</div>
+              <div className="truncate">{r.type}</div>
+              <div className="text-right truncate">{r.amount.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}</div>
               <div className="text-right space-x-2">
                 <button className="px-2 py-1 rounded bg-neutral-800 text-neutral-100" onClick={()=>startEdit(r)}>Editar</button>
                 <button className="px-2 py-1 rounded bg-red-600 text-white" onClick={()=>remove(r.id)}>Excluir</button>

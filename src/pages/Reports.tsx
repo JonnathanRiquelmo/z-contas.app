@@ -14,7 +14,7 @@ export default function Reports() {
   const navigate = useNavigate()
   function goBack() { navigate(-1) }
   const { user } = useAuthState()
-  const [start, setStart] = useState<string>(new Date().toISOString().slice(0,10))
+  const [start, setStart] = useState<string>(new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().slice(0,10))
   const [end, setEnd] = useState<string>(new Date().toISOString().slice(0,10))
   const [selected, setSelected] = useState<number | null>(null)
   const [rows, setRows] = useState<Array<{ category: string; amount: number; type: string; date: number }>>([])
@@ -24,6 +24,9 @@ export default function Reports() {
     for (const r of onlyExpenses) byCat[r.category] = (byCat[r.category]||0) + Math.abs(r.amount)
     return Object.entries(byCat).map(([name, value]) => ({ name, value }))
   }, [rows])
+  const sumIn = useMemo(() => rows.filter(r => r.type === "entrada").reduce((s, r) => s + r.amount, 0), [rows])
+  const sumOut = useMemo(() => rows.filter(r => r.type === "saida").reduce((s, r) => s + Math.abs(r.amount), 0), [rows])
+  const sumBal = useMemo(() => sumIn - sumOut, [sumIn, sumOut])
   useEffect(() => {
     async function load() {
       if (!user) return
@@ -91,7 +94,11 @@ export default function Reports() {
           <input type="date" className="w-full rounded border border-neutral-700 bg-neutral-900 p-3 text-lg" value={end} onChange={e=>setEnd(e.target.value)} />
         </div>
         <div className="flex items-end">
-          <div className="text-lg">Gastos no período: {items.reduce((sum,i)=>sum+i.value,0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}</div>
+          <div className="space-y-1">
+            <div className="text-lg">Entradas: {sumIn.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}</div>
+            <div className="text-lg">Saídas: {sumOut.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}</div>
+            <div className={`text-lg ${sumBal<0?"text-red-500":"text-green-500"}`}>Saldo: {sumBal.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}</div>
+          </div>
         </div>
       </div>
       <div id="chart" className="h-64">
