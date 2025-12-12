@@ -16,8 +16,10 @@ export default function Login() {
     setError("")
     try {
       await login(email, password)
-    } catch {
-      setError("Falha no login. Verifique e tente novamente.")
+    } catch (err: any) {
+      console.error("Login error:", err)
+      const msg = err.code ? `Erro (${err.code}): ${err.message}` : "Falha no login. Verifique conexão e credenciais."
+      setError(msg)
     } finally {
       setLoading(false)
     }
