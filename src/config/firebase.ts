@@ -7,9 +7,10 @@ import {
   connectAuthEmulator
 } from "firebase/auth"
 import {
-  enableIndexedDbPersistence,
-  getFirestore,
-  connectFirestoreEmulator
+  initializeFirestore,
+  persistentLocalCache,
+  connectFirestoreEmulator,
+  getFirestore
 } from "firebase/firestore"
 
 const app = initializeApp({
@@ -22,9 +23,10 @@ const app = initializeApp({
 })
 
 export const auth = getAuth(app)
-export const db = getFirestore(app)
+export const db = initializeFirestore(app, {
+  localCache: persistentLocalCache()
+})
 
-enableIndexedDbPersistence(db).catch(() => {})
 setPersistence(auth, browserLocalPersistence)
 
 const useEmulator = String(import.meta.env.VITE_USE_EMULATOR || "false") === "true"

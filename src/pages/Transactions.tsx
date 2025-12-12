@@ -40,9 +40,10 @@ export default function Transactions() {
       ownerUid: user.uid
     }
     try {
-      await withTimeout(createTransaction(user.uid, tx), 1500)
+      await withTimeout(createTransaction(user.uid, tx), 5000)
       setStatus("Registrado")
-    } catch {
+    } catch (err) {
+      console.error("Transaction error:", err)
       await enqueue({ type: "create", uid: user.uid, tx })
       setStatus("Offline, enfileirado")
     }
