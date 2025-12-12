@@ -15,9 +15,17 @@ export default function Transactions() {
   const [responsible, setResponsible] = useState<"Zilma" | "Feito pelo Amorinho">("Zilma")
   const [status, setStatus] = useState("")
 
+  function withTimeout<T>(p: Promise<T>, ms: number) {
+    return new Promise<T>((resolve, reject) => {
+      const id = setTimeout(() => reject(new Error("timeout")), ms)
+      p.then(v => { clearTimeout(id); resolve(v) }).catch(e => { clearTimeout(id); reject(e) })
+    })
+  }
+
   async function submit(e: React.FormEvent) {
     e.preventDefault()
     if (!user) return
+    setStatus("Processando...")
     const tx = {
       date: new Date(date).getTime(),
       amount: Number(amount) * (type === "saida" ? -1 : 1),
@@ -32,7 +40,7 @@ export default function Transactions() {
       ownerUid: user.uid
     }
     try {
-      await createTransaction(user.uid, tx)
+      await withTimeout(createTransaction(user.uid, tx), 1500)
       setStatus("Registrado")
     } catch {
       await enqueue({ type: "create", uid: user.uid, tx })

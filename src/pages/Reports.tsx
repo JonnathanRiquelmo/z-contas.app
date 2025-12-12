@@ -29,8 +29,12 @@ export default function Reports() {
       if (!user) return
       const s = new Date(start).setHours(0,0,0,0)
       const e = new Date(end).setHours(23,59,59,999)
-      const txs = await getTransactionsByPeriod(user.uid, s, e)
-      setRows(txs.map(t => ({ category: t.category, amount: t.amount, type: t.type, date: t.date })))
+      try {
+        const txs = await getTransactionsByPeriod(user.uid, s, e)
+        setRows(txs.map(t => ({ category: t.category, amount: t.amount, type: t.type, date: t.date })))
+      } catch {
+        setRows([])
+      }
     }
     load()
   }, [user, start, end])

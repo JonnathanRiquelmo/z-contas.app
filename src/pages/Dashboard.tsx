@@ -14,8 +14,7 @@ export default function Dashboard() {
   }
   return (
     <div className="p-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <button className="bg-gray-200 px-3 py-2 rounded text-lg" onClick={goBack}>Voltar</button>
+      <div className="flex items-center justify-end">
         <button className="bg-red-600 text-white px-3 py-2 rounded text-lg" onClick={onLogout}>Sair</button>
       </div>
       <h1 className="text-2xl font-bold">Resumo</h1>

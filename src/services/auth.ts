@@ -8,9 +8,15 @@ export function useAuthState() {
   useEffect(() => {
     const bypass = String(import.meta.env.VITE_E2E_BYPASS_AUTH || "false") === "true"
     if (bypass) {
-      setUser({ uid: "e2e-user", email: "e2e@local" })
+      const logged = localStorage.getItem("E2E_LOGGED") !== "false"
+      setUser(logged ? { uid: "e2e-user", email: "e2e@local" } : null)
       setInitialized(true)
-      return
+      const handler = () => {
+        const again = localStorage.getItem("E2E_LOGGED") !== "false"
+        setUser(again ? { uid: "e2e-user", email: "e2e@local" } : null)
+      }
+      window.addEventListener("auth:changed", handler)
+      return () => window.removeEventListener("auth:changed", handler)
     }
     return onAuthStateChanged(auth, u => {
       setUser(u ? { uid: u.uid, email: u.email } : null)
@@ -21,9 +27,16 @@ export function useAuthState() {
 }
 
 export async function login(email: string, password: string) {
+  const bypass = String(import.meta.env.VITE_E2E_BYPASS_AUTH || "false") === "true"
+  if (bypass) localStorage.setItem("E2E_LOGGED", "true")
   await signInWithEmailAndPassword(auth, email, password)
 }
 
 export async function logout() {
-  await signOut(auth)
+  const bypass = String(import.meta.env.VITE_E2E_BYPASS_AUTH || "false") === "true"
+  if (bypass) localStorage.setItem("E2E_LOGGED", "false")
+  try { await signOut(auth) } catch {}
+  if (bypass) {
+    window.dispatchEvent(new Event("auth:changed"))
+  }
 }
