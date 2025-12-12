@@ -1,10 +1,23 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useAuthState } from "../services/auth"
+import { logout } from "../services/auth"
 
 export default function Dashboard() {
   const { user } = useAuthState()
+  const navigate = useNavigate()
+  async function onLogout() {
+    await logout()
+    navigate("/login")
+  }
+  function goBack() {
+    navigate(-1)
+  }
   return (
     <div className="p-6 space-y-6">
+      <div className="flex items-center justify-between">
+        <button className="bg-gray-200 px-3 py-2 rounded text-lg" onClick={goBack}>Voltar</button>
+        <button className="bg-red-600 text-white px-3 py-2 rounded text-lg" onClick={onLogout}>Sair</button>
+      </div>
       <h1 className="text-2xl font-bold">Resumo</h1>
       <div className="grid grid-cols-2 gap-4">
         <div className="p-4 border rounded">

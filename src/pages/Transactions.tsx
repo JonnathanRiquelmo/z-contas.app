@@ -1,10 +1,12 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { useAuthState } from "../services/auth"
 import { createTransaction } from "../services/firestore"
 import { enqueue } from "../services/offlineQueue"
 
 export default function Transactions() {
   const { user } = useAuthState()
+  const navigate = useNavigate()
   const [type, setType] = useState<"entrada" | "saida">("entrada")
   const [amount, setAmount] = useState("")
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10))
@@ -38,8 +40,14 @@ export default function Transactions() {
     }
   }
 
+  function goBack() {
+    navigate(-1)
+  }
   return (
     <div className="p-6 space-y-4">
+      <div className="flex items-center justify-between">
+        <button className="bg-gray-200 px-3 py-2 rounded text-lg" onClick={goBack}>Voltar</button>
+      </div>
       <h1 className="text-2xl font-bold">Registrar transação</h1>
       <form onSubmit={submit} className="space-y-3">
         <div className="flex gap-3">
@@ -50,10 +58,31 @@ export default function Transactions() {
             Saída
           </button>
         </div>
-        <input className="w-full rounded border p-3 text-lg" placeholder="Valor" value={amount} onChange={e => setAmount(e.target.value)} />
+        <div>
+          <label className="block text-lg mb-1">Valor</label>
+          <input className="w-full rounded border p-3 text-lg" type="number" step="0.01" inputMode="decimal" placeholder="0,00" value={amount} onChange={e => setAmount(e.target.value)} />
+        </div>
         <input className="w-full rounded border p-3 text-lg" type="date" value={date} onChange={e => setDate(e.target.value)} />
-        <input className="w-full rounded border p-3 text-lg" placeholder="Categoria" value={category} onChange={e => setCategory(e.target.value)} />
-        <input className="w-full rounded border p-3 text-lg" placeholder="Conta" value={accountId} onChange={e => setAccountId(e.target.value)} />
+        <div>
+          <label className="block text-lg mb-1">Categoria</label>
+          <select className="w-full rounded border p-3 text-lg" value={category} onChange={e => setCategory(e.target.value)}>
+            <option>Mercado</option>
+            <option>Luz</option>
+            <option>Água</option>
+            <option>Remédios</option>
+            <option>Transporte</option>
+            <option>Aluguel</option>
+            <option>Outros</option>
+          </select>
+        </div>
+        <div>
+          <label className="block text-lg mb-1">Conta</label>
+          <select className="w-full rounded border p-3 text-lg" value={accountId} onChange={e => setAccountId(e.target.value)}>
+            <option>Casa</option>
+            <option>Poupança</option>
+            <option>Carteira</option>
+          </select>
+        </div>
         <div className="flex items-center gap-3">
           <label className="text-lg">Responsável</label>
           <select className="rounded border p-2 text-lg" value={responsible} onChange={e => setResponsible(e.target.value as any)}>
