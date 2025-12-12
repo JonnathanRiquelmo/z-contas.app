@@ -55,26 +55,26 @@ export default function Transactions() {
   return (
     <div className="p-6 space-y-4">
       <div className="flex items-center justify-between">
-        <button className="bg-gray-200 px-3 py-2 rounded text-lg" onClick={goBack}>Voltar</button>
+        <button className="bg-neutral-800 text-neutral-100 px-3 py-2 rounded text-lg" onClick={goBack}>Voltar</button>
       </div>
       <h1 className="text-2xl font-bold">Registrar transação</h1>
       <form onSubmit={submit} className="space-y-3">
         <div className="flex gap-3">
-          <button type="button" className={`flex-1 p-3 rounded ${type === "entrada" ? "bg-accent text-white" : "border"}`} onClick={() => setType("entrada")}>
+          <button type="button" className={`flex-1 p-3 rounded ${type === "entrada" ? "bg-accent text-white" : "border border-neutral-700"}`} onClick={() => setType("entrada")}>
             Entrada
           </button>
-          <button type="button" className={`flex-1 p-3 rounded ${type === "saida" ? "bg-red-600 text-white" : "border"}`} onClick={() => setType("saida")}>
+          <button type="button" className={`flex-1 p-3 rounded ${type === "saida" ? "bg-red-600 text-white" : "border border-neutral-700"}`} onClick={() => setType("saida")}>
             Saída
           </button>
         </div>
         <div>
           <label className="block text-lg mb-1">Valor</label>
-          <input className="w-full rounded border p-3 text-lg" type="number" step="0.01" inputMode="decimal" placeholder="0,00" value={amount} onChange={e => setAmount(e.target.value)} />
+          <input className="w-full rounded border border-neutral-700 bg-neutral-900 p-3 text-lg" type="number" step="0.01" inputMode="decimal" placeholder="0,00" value={amount} onChange={e => setAmount(e.target.value)} />
         </div>
-        <input className="w-full rounded border p-3 text-lg" type="date" value={date} onChange={e => setDate(e.target.value)} />
+        <input className="w-full rounded border border-neutral-700 bg-neutral-900 p-3 text-lg" type="date" value={date} onChange={e => setDate(e.target.value)} />
         <div>
           <label className="block text-lg mb-1">Categoria</label>
-          <select className="w-full rounded border p-3 text-lg" value={category} onChange={e => setCategory(e.target.value)}>
+          <select className="w-full rounded border border-neutral-700 bg-neutral-900 p-3 text-lg" value={category} onChange={e => setCategory(e.target.value)}>
             <option>Mercado</option>
             <option>Luz</option>
             <option>Água</option>
@@ -86,7 +86,7 @@ export default function Transactions() {
         </div>
         <div>
           <label className="block text-lg mb-1">Conta</label>
-          <select className="w-full rounded border p-3 text-lg" value={accountId} onChange={e => setAccountId(e.target.value)}>
+          <select className="w-full rounded border border-neutral-700 bg-neutral-900 p-3 text-lg" value={accountId} onChange={e => setAccountId(e.target.value)}>
             <option>Casa</option>
             <option>Poupança</option>
             <option>Carteira</option>
@@ -94,7 +94,7 @@ export default function Transactions() {
         </div>
         <div className="flex items-center gap-3">
           <label className="text-lg">Responsável</label>
-          <select className="rounded border p-2 text-lg" value={responsible} onChange={e => setResponsible(e.target.value as any)}>
+          <select className="rounded border border-neutral-700 bg-neutral-900 p-2 text-lg" value={responsible} onChange={e => setResponsible(e.target.value as any)}>
             <option>Zilma</option>
             <option>Feito pelo Amorinho</option>
           </select>

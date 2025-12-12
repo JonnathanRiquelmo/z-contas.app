@@ -2,6 +2,7 @@ import { Route, Routes, Navigate } from "react-router-dom"
 import Login from "./pages/Login"
 import Dashboard from "./pages/Dashboard"
 import Transactions from "./pages/Transactions"
+import TransactionsList from "./pages/TransactionsList"
 import Reports from "./pages/Reports"
 import Settings from "./pages/Settings"
 import Onboarding from "./pages/Onboarding"
@@ -25,6 +26,7 @@ export default function App() {
       <Route path="/onboarding" element={user ? <Onboarding /> : <Navigate to="/login" replace />} />
       <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to="/login" replace />} />
       <Route path="/transactions" element={user ? <Transactions /> : <Navigate to="/login" replace />} />
+      <Route path="/transactions/list" element={user ? <TransactionsList /> : <Navigate to="/login" replace />} />
       <Route path="/reports" element={user ? <Reports /> : <Navigate to="/login" replace />} />
       <Route path="/settings" element={user ? <Settings /> : <Navigate to="/login" replace />} />
       <Route path="*" element={<Navigate to={user ? "/dashboard" : "/login"} replace />} />

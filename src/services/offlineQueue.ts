@@ -1,9 +1,10 @@
 import localforage from "localforage"
-import { createTransaction, updateTransaction } from "./firestore"
+import { createTransaction, updateTransaction, deleteTransaction } from "./firestore"
 
 type QueueItem =
   | { type: "create"; uid: string; tx: any }
   | { type: "update"; uid: string; id: string; patch: any }
+  | { type: "delete"; uid: string; id: string }
 
 const store = localforage.createInstance({ name: "z-contas", storeName: "localQueue" })
 
@@ -19,6 +20,7 @@ export async function processAll() {
     try {
       if (i.type === "create") await createTransaction(i.uid, i.tx)
       if (i.type === "update") await updateTransaction(i.uid, i.id, i.patch)
+      if (i.type === "delete") await deleteTransaction(i.uid, i.id)
     } catch {
       remaining.push(i)
     }

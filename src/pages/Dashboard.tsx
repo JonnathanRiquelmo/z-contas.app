@@ -19,21 +19,26 @@ export default function Dashboard() {
       </div>
       <h1 className="text-2xl font-bold">Resumo</h1>
       <div className="grid grid-cols-2 gap-4">
-        <div className="p-4 border rounded">
+        <div className="p-4 border border-neutral-700 rounded">
           <div className="text-lg">Saldo total</div>
           <div className="text-2xl font-bold">R$ 0,00</div>
         </div>
-        <div className="p-4 border rounded">
+        <div className="p-4 border border-neutral-700 rounded">
           <div className="text-lg">Período atual</div>
           <div className="text-2xl font-bold">Entradas 0 • Saídas 0</div>
         </div>
       </div>
-      <Link to="/transactions" className="block bg-accent text-white text-center p-4 rounded text-xl">
-        Registrar
-      </Link>
+      <div className="grid grid-cols-2 gap-3">
+        <Link to="/transactions" className="bg-accent text-white text-center p-4 rounded text-xl">
+          Registrar
+        </Link>
+        <Link to="/transactions/list" className="bg-neutral-800 text-neutral-100 text-center p-4 rounded text-xl">
+          Listar
+        </Link>
+      </div>
       <div className="flex gap-3">
         <Link to="/reports" className="flex-1 bg-primary text-white text-center p-3 rounded text-lg">Relatórios</Link>
-        <Link to="/settings" className="flex-1 bg-gray-800 text-white text-center p-3 rounded text-lg">Configurações</Link>
+        <Link to="/settings" className="flex-1 bg-neutral-800 text-neutral-100 text-center p-3 rounded text-lg">Configurações</Link>
       </div>
       <div className="text-sm">Usuária: {user?.email}</div>
     </div>

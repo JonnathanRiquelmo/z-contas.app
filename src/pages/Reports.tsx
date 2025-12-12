@@ -78,17 +78,17 @@ export default function Reports() {
   return (
     <div className="p-6 space-y-4">
       <div className="flex items-center justify-between">
-        <button className="bg-gray-200 px-3 py-2 rounded text-lg" onClick={goBack}>Voltar</button>
+        <button className="bg-neutral-800 text-neutral-100 px-3 py-2 rounded text-lg" onClick={goBack}>Voltar</button>
       </div>
       <h1 className="text-2xl font-bold">Relatórios</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         <div>
           <label className="block text-lg mb-1">Início</label>
-          <input type="date" className="w-full rounded border p-3 text-lg" value={start} onChange={e=>setStart(e.target.value)} />
+          <input type="date" className="w-full rounded border border-neutral-700 bg-neutral-900 p-3 text-lg" value={start} onChange={e=>setStart(e.target.value)} />
         </div>
         <div>
           <label className="block text-lg mb-1">Fim</label>
-          <input type="date" className="w-full rounded border p-3 text-lg" value={end} onChange={e=>setEnd(e.target.value)} />
+          <input type="date" className="w-full rounded border border-neutral-700 bg-neutral-900 p-3 text-lg" value={end} onChange={e=>setEnd(e.target.value)} />
         </div>
         <div className="flex items-end">
           <div className="text-lg">Gastos no período: {items.reduce((sum,i)=>sum+i.value,0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}</div>
@@ -108,16 +108,16 @@ export default function Reports() {
         </ResponsiveContainer>
       </div>
       {selected!=null && items[selected] && (
-        <div className="p-3 border rounded text-lg">Seleção: {items[selected].name} — {items[selected].value.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}</div>
+        <div className="p-3 border border-neutral-700 rounded text-lg">Seleção: {items[selected].name} — {items[selected].value.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}</div>
       )}
       <div className="space-y-2">
         <h2 className="text-xl font-bold">Gastos discriminados</h2>
-        <div className="border rounded">
+        <div className="border border-neutral-700 rounded">
           <div className="grid grid-cols-3 font-semibold p-2">
             <div>Data</div><div>Categoria</div><div className="text-right">Valor</div>
           </div>
           {rows.filter(r=>r.type==="saida").map((r,i)=> (
-            <div key={i} className="grid grid-cols-3 p-2 border-t">
+            <div key={i} className="grid grid-cols-3 p-2 border-t border-neutral-700">
               <div>{new Date(r.date).toLocaleDateString()}</div>
               <div>{r.category}</div>
               <div className="text-right">{r.amount.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}</div>
