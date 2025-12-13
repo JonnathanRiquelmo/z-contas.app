@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "recharts"
-import { shareText } from "../services/share"
+import { shareText, shareDashboardSummary } from "../services/share"
 import Papa from "papaparse"
 import jsPDF from "jspdf"
 import html2canvas from "html2canvas"
@@ -136,7 +136,21 @@ export default function Reports() {
         <button className="flex-1 bg-primary text-white p-3 rounded text-lg" onClick={exportPDF}>Exportar PDF</button>
         <button className="flex-1 bg-gray-800 text-white p-3 rounded text-lg" onClick={exportCSV}>Exportar CSV</button>
       </div>
-      <button className="w-full bg-accent text-white p-3 rounded text-lg" onClick={() => shareText("Relatório Z-Contas pronto")}>
+      <button
+        className="w-full bg-accent text-white p-3 rounded text-lg"
+        onClick={() =>
+          shareDashboardSummary({
+            periodLabel: `Período: ${new Date(start).toLocaleDateString()} a ${new Date(end).toLocaleDateString()}`,
+            sumIn,
+            sumOut,
+            sumBal,
+            topCats: items.map(i => ({ name: i.name, value: i.value })),
+            lastTxs: rows
+              .slice(0, 2)
+              .map(r => ({ date: r.date, category: r.category, description: r.category, amount: r.amount })),
+          })
+        }
+      >
         Compartilhar
       </button>
     </div>

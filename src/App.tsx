@@ -17,6 +17,10 @@ export default function App() {
   useEffect(() => {
     if (online) processAll()
   }, [online])
+  useEffect(() => {
+    document.documentElement.classList.add("dark")
+    return () => document.documentElement.classList.remove("dark")
+  }, [])
   if (!initialized) return <div className="p-6 text-xl">Carregando...</div>
   return (
     <>

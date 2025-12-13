@@ -12,10 +12,12 @@ export default function Settings() {
     await notify("Z-Contas", "Exemplo de notificação")
   }
   return (
-    <div className="p-6 space-y-4">
+    <div className="p-6 space-y-4 bg-neutral-900 text-neutral-100 min-h-full">
       <h1 className="text-2xl font-bold">Configurações</h1>
-      <button className="bg-primary text-white p-3 rounded text-lg" onClick={testNotif}>Testar notificações</button>
-      <button className="bg-red-600 text-white p-3 rounded text-lg" onClick={onLogout}>Sair</button>
+      <div className="space-y-3">
+        <button className="bg-neutral-800 text-neutral-100 p-3 rounded-2xl text-lg hover:brightness-110" onClick={testNotif}>Testar notificações</button>
+        <button className="bg-rose-500 text-white p-3 rounded-2xl text-lg hover:brightness-110" onClick={onLogout}>Sair</button>
+      </div>
     </div>
   )
 }

@@ -28,3 +28,25 @@ function download(url: string, filename: string) {
   a.click()
   document.body.removeChild(a)
 }
+
+export function shareDashboardSummary(params: {
+  periodLabel: string
+  sumIn: number
+  sumOut: number
+  sumBal: number
+  topCats: Array<{ name: string; value: number }>
+  lastTxs: Array<{ date: number; category: string; description?: string; amount: number }>
+}) {
+  const { periodLabel, sumIn, sumOut, sumBal, topCats, lastTxs } = params
+  const fmt = (n: number) => n.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
+  const header = `Z-Contas — ${periodLabel}`
+  const totals = `Entradas: ${fmt(sumIn)}\nSaídas: ${fmt(sumOut)}\nSaldo: ${fmt(sumBal)}`
+  const cats = topCats.slice(0, 3).map(c => `${c.name}: ${fmt(c.value)}`).join(" • ")
+  const txs = lastTxs.slice(0, 2).map(t => {
+    const d = new Date(t.date).toLocaleDateString()
+    const desc = t.description || t.category
+    return `• ${d} — ${desc}: ${fmt(t.amount)}`
+  }).join("\n")
+  const body = `${header}\n\n${totals}\n\nTop categorias: ${cats || "—"}\n\nÚltimos:\n${txs || "—"}`
+  return shareText(body)
+}

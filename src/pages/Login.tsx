@@ -29,10 +29,18 @@ export default function Login() {
     <div className="min-h-full flex items-center justify-center p-6">
       <form onSubmit={onSubmit} className="w-full max-w-sm space-y-4">
         <h1 className="text-2xl font-bold text-center">Entrar</h1>
-        {canInstall && (
-          <button type="button" className="w-full bg-accent text-white p-3 rounded text-lg" onClick={install}>
-            Instalar app
-          </button>
+        <button
+          type="button"
+          className={`w-full ${canInstall ? "bg-sky-600" : "bg-neutral-700"} text-white p-3 rounded text-lg`}
+          onClick={install}
+          disabled={!canInstall}
+        >
+          Instalar app
+        </button>
+        {!canInstall && (
+          <div className="text-center text-neutral-500 text-sm">
+            A instalação ficará disponível quando o navegador oferecer o atalho.
+          </div>
         )}
         <input
           type="email"

@@ -9,7 +9,8 @@
     "preview": "vite preview --host",
     "lint": "eslint --max-warnings=0 \"src/**/*.{ts,tsx}\"",
     "test": "vitest",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "seed:emulator": "node scripts/seed-emulator.mjs"
   },
   "dependencies": {
     "firebase": "^11.2.0",
